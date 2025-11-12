@@ -122,5 +122,7 @@
   "cmake.sourceDirectory": "${workspaceFolder}/CMakeLists.txt",
   "cmake.ignoreCMakeListsMissing": true,
   "cSpell.words": ["yinfo", "yerror"],
-  "Lua.workspace.checkThirdParty": false
+  "Lua.workspace.checkThirdParty": false,
+  "qt-ui.customWidgetsDesignerExePath": "/usr/bin/designer6", // qdesign路径
+  "qt-qml.qmlls.customExePath": "/usr/lib/qt6/bin/qmlls" // qmlls路径
 }
