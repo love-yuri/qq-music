@@ -18,9 +18,11 @@ file(GLOB_RECURSE PROJECT_SOURCES
   CONFIGURE_DEPENDS
   main.cpp
   "${CMAKE_SOURCE_DIR}/include/modules/*.ixx"
-  "${CMAKE_SOURCE_DIR}/src/*.cpp"
-  "${CMAKE_SOURCE_DIR}/include/*.h"
+  "${CMAKE_SOURCE_DIR}/include/components/*.hpp"
   "${CMAKE_SOURCE_DIR}/include/*.hpp"
+
+  "${CMAKE_SOURCE_DIR}/src/components/*.cpp"
+  "${CMAKE_SOURCE_DIR}/src/*.cpp"
   "${CMAKE_SOURCE_DIR}/qrc/*.qrc"
 )
 
@@ -29,7 +31,7 @@ qt_add_executable(${PROJECT_NAME} MANUAL_FINALIZATION ${PROJECT_SOURCES})
 
 qt_add_qml_module(
   ${PROJECT_NAME}
-  URI hello
+  URI main
   QML_FILES
   Main.qml
 )

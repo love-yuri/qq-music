@@ -5,6 +5,7 @@ Window {
     width: 180
     height: 180
     visible: true
+    color: 'pink'
     Column {
         anchors.fill: parent
         padding: 1.5
