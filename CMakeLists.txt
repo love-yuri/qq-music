@@ -1,29 +1,16 @@
-cmake_minimum_required(VERSION 3.20) #设置cmake最低版本
+cmake_minimum_required(VERSION 3.16)
 
-# 设置项目名称 版本 语言
-project(yuri VERSION 1.0 LANGUAGES CXX)
-# pacman -S mingw-w64-x86_64-libmariadbclient
-# pacman -S mingw-w64-x86_64-qt6
-# pacman -S mingw-w64-x86_64-cmake
+project(yuri VERSION 0.1 LANGUAGES CXX)
 
-# set(CMAKE_PREFIX_PATH "C:\\msys64\\mingw64\\lib\\cmake") # qt库目录
-# sudo pacman -S qt6-base qt6-tools
-
-set(CMAKE_AUTOUIC ON) # 自动编译ui文件
-set(CMAKE_AUTOMOC ON) # 自动编译moc文件
-set(CMAKE_AUTORCC ON) # 自动编译资源文件
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_STANDARD 26) # 设置c++ 最低版本
-set(CMAKE_CXX_STANDARD_REQUIRED ON) # 要求使用指定版本号
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON) # 开启生成 compile_commands.json
 set(CMAKE_EXPERIMENTAL_CXX_MODULE_CMAKE_API "TRUE")
 set(CMAKE_EXPERIMENTAL_CXX_MODULE_DYNDEP 1)
 
-
 # 寻找qt依赖库
-find_package(Qt6 REQUIRED COMPONENTS Widgets LinguistTools)
-
-# 包含ui文件
-set(CMAKE_AUTOUIC_SEARCH_PATHS ${CMAKE_SOURCE_DIR}/include/ui)
+find_package(Qt6 REQUIRED COMPONENTS Quick)
+qt_standard_project_setup(REQUIRES 6.8)
 
 # 搜索源码、头文件、资源文件
 file(GLOB IXX_MODULES ${PROJECT_SOURCE_DIR}/include/modules/*.ixx)
@@ -40,6 +27,13 @@ file(GLOB_RECURSE PROJECT_SOURCES
 # 构建可执行文件
 qt_add_executable(${PROJECT_NAME} MANUAL_FINALIZATION ${PROJECT_SOURCES})
 
+qt_add_qml_module(
+  ${PROJECT_NAME}
+  URI hello
+  QML_FILES
+  Main.qml
+)
+
 target_sources(${PROJECT_NAME}
   PRIVATE
   FILE_SET cxx_modules TYPE CXX_MODULES FILES
@@ -52,10 +46,7 @@ set_property(TARGET ${PROJECT_NAME} PROPERTY CXX_SCAN_FOR_MODULES ON)
 target_include_directories(${PROJECT_NAME} PRIVATE ${CMAKE_SOURCE_DIR}/include)
 
 # 链接文件
-target_link_libraries(
-  ${PROJECT_NAME} 
+target_link_libraries(yuri
   PRIVATE 
-  Qt6::Widgets
+  Qt6::Quick
 )
-
-qt_finalize_executable(${PROJECT_NAME})

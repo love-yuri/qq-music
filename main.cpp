@@ -1,15 +1,20 @@
 /*
  * @Author: love-yuri yuri2078170658@gmail.com
  * @Date: 2025-11-11 20:08:33
- * @LastEditTime: 2025-11-12 18:24:59
+ * @LastEditTime: 2025-11-14 21:37:54
  * @Description:
  */
-#include <QApplication>
-#include <QTranslator>
-#include "mainwindow.h"
+#include <QGuiApplication>
+#include <QQmlApplicationEngine>
 
 int main(int argc, char *argv[]) {
-  QApplication a(argc, argv);
-  MainWindow window;
-  return a.exec();
+  QGuiApplication app(argc, argv);
+
+  QQmlApplicationEngine engine;
+  QObject::connect(
+      &engine, &QQmlApplicationEngine::objectCreationFailed, &app,
+      []() { QCoreApplication::exit(-1); }, Qt::QueuedConnection);
+  engine.loadFromModule("hello", "Main");
+
+  return app.exec();
 }
