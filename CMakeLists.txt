@@ -29,10 +29,12 @@ file(GLOB_RECURSE PROJECT_SOURCES
 # 构建可执行文件
 qt_add_executable(${PROJECT_NAME} MANUAL_FINALIZATION ${PROJECT_SOURCES})
 
+# qml文件
 qt_add_qml_module(
   ${PROJECT_NAME}
   URI main
   QML_FILES
+  components/MenuItem.qml
   Main.qml
 )
 
