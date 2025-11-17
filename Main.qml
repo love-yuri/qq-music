@@ -1,4 +1,5 @@
-// application.qml
+pragma ComponentBehavior: Bound
+
 import QtQuick
 import QtQuick.VectorImage
 import './components' as Compoents
@@ -20,11 +21,12 @@ Window {
             color: Qt.rgba(975, 985, 945, 935)
 
             Column {
+                property int selectIndex: 0
+                id: list
                 width: parent.width
                 anchors.top: parent.top
                 anchors.topMargin: 5
                 spacing: 5
-                property int selectIndex: 0
                 Row {
                     padding: 5
                     anchors.horizontalCenter: parent.horizontalCenter
@@ -65,23 +67,49 @@ Window {
                     height: 8
                 }
 
-                Compoents.MenuItem {
-                    base_icon: 'play.svg'
-                    title: '发现音乐'
-                    selected: parent.selectIndex == 0
-                    onItemClicked: {
-                        parent.selectIndex = 0
+                Repeater {
+                    model: ListModel {
+                        ListElement {
+                            icon: 'play.svg'
+                            text: '发现音乐'
+                        }
+                        ListElement {
+                            icon: 'fm.svg'
+                            text: '私人FM'
+                        }
+                        ListElement {
+                            icon: 'video.svg'
+                            text: '视频'
+                        }
+                        ListElement {
+                            icon: 'friend.svg'
+                            text: '朋友'
+                        }
+                        ListElement {
+                            icon: 'local-music.svg'
+                            text: '本地音乐'
+                        }
+                        ListElement {
+                            icon: 'podcast.svg'
+                            text: '播客'
+                        }
+                    }
+
+                    delegate: Compoents.MenuItem {
+                        required property int index
+                        required property string text
+                        required property string icon
+
+                        base_icon: icon
+                        title: text
+                        selected: index == list.selectIndex
+                        onItemClicked: {
+                            list.selectIndex = index
+                        }
                     }
                 }
 
-                Compoents.MenuItem {
-                    base_icon: 'play.svg'
-                    title: '私人FM'
-                    selected: parent.selectIndex == 1
-                    onItemClicked: {
-                        parent.selectIndex = 1
-                    }
-                }
+               
             }
         }
 

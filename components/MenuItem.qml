@@ -16,7 +16,7 @@ Item {
     signal itemClicked
 
     width: parent.width
-    implicitHeight: childrenRect.height
+    implicitHeight: contentRow.height
     anchors.left: parent.left
     anchors.right: parent.right
     anchors.margins: 15
