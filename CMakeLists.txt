@@ -10,6 +10,8 @@ set(CMAKE_EXPERIMENTAL_CXX_MODULE_DYNDEP 1)
 
 # 寻找qt依赖库
 find_package(Qt6 REQUIRED COMPONENTS Quick)
+find_package(CURL REQUIRED)
+find_package(RapidJSON REQUIRED CONFIG)
 qt_standard_project_setup(REQUIRES 6.8)
 
 # 搜索源码、头文件、资源文件
@@ -53,4 +55,5 @@ target_include_directories(${PROJECT_NAME} PRIVATE ${CMAKE_SOURCE_DIR}/include)
 target_link_libraries(yuri
   PRIVATE 
   Qt6::Quick
+  ${CURL_LIBRARIES}
 )
