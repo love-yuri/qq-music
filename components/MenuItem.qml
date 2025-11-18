@@ -16,32 +16,39 @@ Item {
     signal itemClicked
 
     width: parent.width
-    implicitHeight: contentRow.height
+    implicitHeight: 44
     anchors.left: parent.left
     anchors.right: parent.right
-    anchors.margins: 15
 
-    // 背景渐变
     Rectangle {
         id: background
         anchors.fill: parent
-        radius: 16
-        gradient: Gradient {
-            orientation: Gradient.Horizontal
-            GradientStop { position: 0.0; color: "#ee0a24" }
-            GradientStop { position: 1.0; color: "#ff6b6b" }
-        }
-        opacity: root.active ? 0.1 : 0
+        anchors.leftMargin: 15
+        anchors.rightMargin: 15
+        radius: 12
+        color: root.selected ? "#FFE8F0" : (root.hovered ? "#FFF0F5" : "transparent")
 
-        Behavior on opacity {
-            NumberAnimation { duration: 200; easing.type: Easing.OutCubic }
+        // 左侧彩色边框指示器（仅选中时显示）
+        Rectangle {
+            anchors.left: parent.left
+            anchors.verticalCenter: parent.verticalCenter
+            width: 3
+            height: parent.height * 0.5
+            radius: 2
+            color: "#FF6B9D"
+            opacity: root.selected ? 1 : 0
+
+            Behavior on opacity {
+                NumberAnimation { duration: 200; easing.type: Easing.OutCubic }
+            }
         }
     }
 
     Row {
         id: contentRow
-        width: parent.width
-        padding: 12
+        anchors.fill: parent
+        anchors.leftMargin: 25
+        anchors.rightMargin: 15
         spacing: 12
 
         transform: Translate {
@@ -55,22 +62,20 @@ Item {
 
         VectorImage {
             id: icon
-            width: 24; height: 24
+            width: 22
+            height: 22
+            anchors.verticalCenter: parent.verticalCenter
             preferredRendererType: VectorImage.CurveRenderer
-
             source: `../qrc/icons/${root.active ? "active" : "normal"}/${root.base_icon}`
         }
 
         Text {
             id: text
             text: root.title
-            font.pixelSize: 20
+            font.pixelSize: 15
             anchors.verticalCenter: parent.verticalCenter
-            color: root.active ? "#ee0a24" : "#999999"
-
-            Behavior on color {
-                ColorAnimation { duration: 200; easing.type: Easing.OutCubic }
-            }
+            color: root.selected ? "#ee0a24" : (root.hovered ? "#FF8FB3" : "#999999")
+            font.weight: root.selected ? Font.Medium : Font.Normal
         }
     }
 
