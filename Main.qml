@@ -5,12 +5,16 @@ import QtQuick.VectorImage
 import './components' as Compoents
 
 Window {
+    id: window
     width: 520
     height: 1080
     visible: true
     color: '#FFF5F8'
 
+    property string currentPage: "views/DiscoverPage.qml"
+
     Item {
+        id: root
         anchors.fill: parent
         anchors.margins: 0
 
@@ -49,7 +53,7 @@ Window {
                     text: '网易云音乐'
                     font.pixelSize: 22
                     font.bold: true
-                    color: '#b4262d'
+                    color: '#FF6B9D'
                     anchors.verticalCenter: parent.verticalCenter
                 }
             }
@@ -61,7 +65,7 @@ Window {
             anchors.left: parent.left
             anchors.top: titleBar.bottom
             anchors.bottom: parent.bottom
-            width: 250
+            width: 300
             color: '#FFF9FB'
 
             Column {
@@ -70,7 +74,7 @@ Window {
                 width: parent.width
                 anchors.top: parent.top
                 anchors.topMargin: 20
-                spacing: 5
+                spacing: 2
 
                 // 导航标题
                 Text {
@@ -87,18 +91,22 @@ Window {
                         ListElement {
                             icon: 'play.svg'
                             text: '发现音乐'
+                            page: 'views/DiscoverPage.qml'
                         }
                         ListElement {
                             icon: 'fm.svg'
                             text: '私人FM'
+                            page: 'views/FMPage.qml'
                         }
                         ListElement {
                             icon: 'video.svg'
                             text: '视频'
+                            page: 'views/VideoPage.qml'
                         }
                         ListElement {
                             icon: 'friend.svg'
                             text: '朋友'
+                            page: 'views/FriendPage.qml'
                         }
                     }
 
@@ -106,12 +114,14 @@ Window {
                         required property int index
                         required property string text
                         required property string icon
+                        required property string page
 
                         base_icon: icon
                         title: text
                         selected: index == list.selectIndex
                         onItemClicked: {
                             list.selectIndex = index
+                            root.switchPage(page)
                         }
                     }
                 }
@@ -143,10 +153,17 @@ Window {
                         ListElement {
                             icon: 'local-music.svg'
                             text: '本地音乐'
+                            page: 'views/LocalMusicPage.qml'
+                        }
+                        ListElement {
+                            icon: 'my-likes.svg'
+                            text: '我喜欢的音乐'
+                            page: 'views/MyLikesPage.qml'
                         }
                         ListElement {
                             icon: 'podcast.svg'
                             text: '播客'
+                            page: 'views/PodcastPage.qml'
                         }
                     }
 
@@ -154,12 +171,14 @@ Window {
                         required property int index
                         required property string text
                         required property string icon
+                        required property string page
 
                         base_icon: icon
                         title: text
                         selected: (index + 4) == list.selectIndex
                         onItemClicked: {
                             list.selectIndex = index + 4
+                            root.switchPage(page)
                         }
                     }
                 }
@@ -200,7 +219,7 @@ Window {
                     onMouseXChanged: {
                         if (pressed) {
                             var newWidth = leftPanel.width + mouseX
-                            if (newWidth >= 250 && newWidth <= 350) {
+                            if (newWidth >= 250 && newWidth <= 450) {
                                 leftPanel.width = newWidth
                             }
                         }
@@ -209,28 +228,27 @@ Window {
             }
         }
 
-        // 主内容区域
+        // 主内容区域 - 简单直接的页面切换
         Rectangle {
+            id: contentContainer
             anchors.left: divider.right
             anchors.right: parent.right
             anchors.top: titleBar.bottom
             anchors.bottom: parent.bottom
             color: '#FFF5F8'
 
-            // 内容区域的内边距和装饰
-            Rectangle {
+            Loader {
+                id: pageLoader
                 anchors.fill: parent
-                anchors.margins: 30
-                color: 'transparent'
-
-                Text {
-                    anchors.centerIn: parent
-                    text: '✨ 内容区域 ✨'
-                    font.pixelSize: 20
-                    color: '#FFAAC8'
-                    font.bold: true
-                }
+                source: window.currentPage
             }
+        }
+
+        // 切换页面函数
+        function switchPage(pageUrl) {
+            if (pageUrl === window.currentPage) return
+            window.currentPage = pageUrl
+            pageLoader.source = pageUrl
         }
     }
 }
