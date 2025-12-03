@@ -1,0 +1,4 @@
+[submodule "api"]
+	path = api
+	branch = main
+	url = https://github.com/love-yuri/qq-music-api.git
