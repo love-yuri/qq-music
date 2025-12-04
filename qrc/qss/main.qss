@@ -1,0 +1,7 @@
+#left_menu {
+    background: #ffffff;
+}
+
+#right_content {
+    background: #fafafa;
+}
