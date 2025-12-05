@@ -1,5 +1,17 @@
 cmake_minimum_required(VERSION 3.20) #设置cmake最低版本
 
+if (WIN32)
+  set(CMAKE_PREFIX_PATH "D:\\Qt\\6.8.0\\msvc2022_64\\lib\\cmake")
+  if (DEFINED ENV{VCPKG_ROOT})
+    set(VCPKG_ROOT "E:/love-yuri/github/vcpkg")
+    message("VCPKG_ROOT 使用: $ENV{VCPKG_ROOT}")
+  else ()
+    set(VCPKG_ROOT "E:/love-yuri/github/vcpkg")
+    message(WARNING "VCPKG_ROOT 没有设置, 使用默认: ${VCPKG_ROOT}")
+  endif ()
+  set(CMAKE_TOOLCHAIN_FILE "${VCPKG_ROOT}/scripts/buildsystems/vcpkg.cmake" CACHE STRING "")
+endif ()
+
 # 设置项目名称 版本 语言
 project(yuri VERSION 1.0 LANGUAGES CXX)
 
@@ -62,6 +74,10 @@ target_link_libraries(${PROJECT_NAME} PRIVATE qq_music_api)
 
 qt_finalize_executable(${PROJECT_NAME})
 
+if(MSVC)
+  target_compile_options(${PROJECT_NAME} PUBLIC /Zc:preprocessor /utf-8)
+endif()
+
 # 拷贝js
 add_custom_command(
     TARGET ${PROJECT_NAME} POST_BUILD
@@ -70,3 +86,30 @@ add_custom_command(
     "$<TARGET_FILE_DIR:${PROJECT_NAME}>/script"
     COMMENT "Copying script directory to executable output directory..."
 )
+
+if (WIN32)
+  get_target_property(QtCore_location Qt6::Core LOCATION)
+  get_filename_component(QT_BIN_DIR "${QtCore_location}" DIRECTORY)
+  set(QT_PLUGIN_DIR "${QT_BIN_DIR}/../plugins")
+  message(STATUS "Qt bin path: ${QT_BIN_DIR}")
+
+  # 平台插件所在路径
+  set(QT_PLATFORM_PLUGIN_DIR "${QT_PLUGIN_DIR}/platforms")
+
+  # 拷贝 Qt 平台插件
+  add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
+      COMMAND ${CMAKE_COMMAND} -E make_directory
+      "$<TARGET_FILE_DIR:${PROJECT_NAME}>/plugins/platforms"
+      COMMAND ${CMAKE_COMMAND} -E copy_if_different
+      "${QT_PLATFORM_PLUGIN_DIR}/qwindows$<$<AND:$<CXX_COMPILER_ID:MSVC>,$<CONFIG:Debug>>:d>.dll"
+      "$<TARGET_FILE_DIR:${PROJECT_NAME}>/plugins/platforms"
+  )
+
+  foreach (QT_LIB Core Gui Widgets)
+    add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
+        COMMAND ${CMAKE_COMMAND} -E copy
+        "${QT_BIN_DIR}/Qt6${QT_LIB}$<$<AND:$<CXX_COMPILER_ID:MSVC>,$<CONFIG:Debug>>:d>.dll"
+        "$<TARGET_FILE_DIR:${PROJECT_NAME}>")
+  endforeach ()
+
+endif ()
