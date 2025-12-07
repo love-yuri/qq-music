@@ -1,7 +1,14 @@
+/* 左侧菜单widget */
 #left_menu {
     background: #ffffff;
 }
 
+/* 右侧主widget */
 #right_content {
     background: #fafafa;
+}
+
+/* 左侧顶部logo */
+#main_logo {
+    margin-top: 10;
 }
