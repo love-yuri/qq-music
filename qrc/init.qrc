@@ -1,5 +1,24 @@
 <RCC>
     <qresource prefix="/">
         <file>qss/main.qss</file>
+
+        <file>icons/normal/download-manager.svg</file>
+        <file>icons/normal/fm.svg</file>
+        <file>icons/normal/friend.svg</file>
+        <file>icons/normal/local-music.svg</file>
+        <file>icons/normal/my-likes.svg</file>
+        <file>icons/normal/play.svg</file>
+        <file>icons/normal/podcast.svg</file>
+        <file>icons/normal/video.svg</file>
+        <file>icons/active/download-manager.svg</file>
+        <file>icons/active/fm.svg</file>
+        <file>icons/active/friend.svg</file>
+        <file>icons/active/local-music.svg</file>
+        <file>icons/active/my-likes.svg</file>
+        <file>icons/active/play.svg</file>
+        <file>icons/active/podcast.svg</file>
+        <file>icons/active/video.svg</file>
+        <file>icons/music-163.svg</file>
+
     </qresource>
 </RCC>
