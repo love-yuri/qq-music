@@ -43,9 +43,9 @@ file(GLOB_RECURSE PROJECT_SOURCES
   main.cpp
   ${IXX_MODULES}
   "${CMAKE_CURRENT_SOURCE_DIR}/src/*.cpp"
+  "${CMAKE_CURRENT_SOURCE_DIR}/src/components/*.hpp"
   "${CMAKE_CURRENT_SOURCE_DIR}/include/*.hpp"
-  "${CMAKE_CURRENT_SOURCE_DIR}/include/utils/*.hpp"
-  "${CMAKE_CURRENT_SOURCE_DIR}/include/utils/common/*.hpp"
+  "${CMAKE_CURRENT_SOURCE_DIR}/include/components/*.hpp"
   "${CMAKE_CURRENT_SOURCE_DIR}/qrc/*.qrc"
 )
 
