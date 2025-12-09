@@ -28,7 +28,7 @@ set(CMAKE_EXPERIMENTAL_CXX_MODULE_DYNDEP 1)
 add_subdirectory(api)
 
 # 寻找qt依赖库
-find_package(Qt6 REQUIRED COMPONENTS Widgets LinguistTools)
+find_package(Qt6 REQUIRED COMPONENTS Widgets LinguistTools Svg)
 
 # 包含ui文件
 set(CMAKE_AUTOUIC_SEARCH_PATHS ${CMAKE_CURRENT_SOURCE_DIR}/include/ui)
@@ -67,6 +67,7 @@ target_link_libraries(
   ${PROJECT_NAME} 
   PRIVATE 
   Qt6::Widgets
+  Qt6::Svg
 )
 
 # 链接api库
@@ -94,18 +95,26 @@ if (WIN32)
   message(STATUS "Qt bin path: ${QT_BIN_DIR}")
 
   # 平台插件所在路径
-  set(QT_PLATFORM_PLUGIN_DIR "${QT_PLUGIN_DIR}/platforms")
 
   # 拷贝 Qt 平台插件
   add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
       COMMAND ${CMAKE_COMMAND} -E make_directory
       "$<TARGET_FILE_DIR:${PROJECT_NAME}>/plugins/platforms"
       COMMAND ${CMAKE_COMMAND} -E copy_if_different
-      "${QT_PLATFORM_PLUGIN_DIR}/qwindows$<$<AND:$<CXX_COMPILER_ID:MSVC>,$<CONFIG:Debug>>:d>.dll"
+      "${QT_PLUGIN_DIR}/platforms/qwindows$<$<AND:$<CXX_COMPILER_ID:MSVC>,$<CONFIG:Debug>>:d>.dll"
       "$<TARGET_FILE_DIR:${PROJECT_NAME}>/plugins/platforms"
   )
 
-  foreach (QT_LIB Core Gui Widgets)
+  add_custom_command(
+      TARGET ${PROJECT_NAME} POST_BUILD
+      COMMAND ${CMAKE_COMMAND} -E make_directory
+      "$<TARGET_FILE_DIR:${PROJECT_NAME}>/plugins/imageformats"
+      COMMAND ${CMAKE_COMMAND} -E copy_directory
+      "${QT_PLUGIN_DIR}/imageformats"
+      "$<TARGET_FILE_DIR:${PROJECT_NAME}>/plugins/imageformats"
+  )
+
+  foreach (QT_LIB Core Gui Widgets Svg)
     add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
         COMMAND ${CMAKE_COMMAND} -E copy
         "${QT_BIN_DIR}/Qt6${QT_LIB}$<$<AND:$<CXX_COMPILER_ID:MSVC>,$<CONFIG:Debug>>:d>.dll"
