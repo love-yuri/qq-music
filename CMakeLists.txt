@@ -18,11 +18,8 @@ project(yuri VERSION 1.0 LANGUAGES CXX)
 set(CMAKE_AUTOUIC ON) # 自动编译ui文件
 set(CMAKE_AUTOMOC ON) # 自动编译moc文件
 set(CMAKE_AUTORCC ON) # 自动编译资源文件
-set(CMAKE_CXX_STANDARD 23) # 设置c++ 最低版本
 set(CMAKE_CXX_STANDARD_REQUIRED ON) # 要求使用指定版本号
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON) # 开启生成 compile_commands.json
-set(CMAKE_EXPERIMENTAL_CXX_MODULE_CMAKE_API "TRUE")
-set(CMAKE_EXPERIMENTAL_CXX_MODULE_DYNDEP 1)
 
 # 添加api工程
 add_subdirectory(api)
@@ -42,11 +39,12 @@ file(GLOB_RECURSE PROJECT_SOURCES
   CONFIGURE_DEPENDS
   main.cpp
   ${IXX_MODULES}
-  "${CMAKE_CURRENT_SOURCE_DIR}/src/*.cpp"
-  "${CMAKE_CURRENT_SOURCE_DIR}/src/components/*.hpp"
-  "${CMAKE_CURRENT_SOURCE_DIR}/include/*.hpp"
-  "${CMAKE_CURRENT_SOURCE_DIR}/include/components/*.hpp"
-  "${CMAKE_CURRENT_SOURCE_DIR}/qrc/*.qrc"
+  ${CMAKE_CURRENT_SOURCE_DIR}/src/*.cpp
+  ${CMAKE_CURRENT_SOURCE_DIR}/src/components/*.hpp
+  ${CMAKE_CURRENT_SOURCE_DIR}/include/*.hpp
+  ${CMAKE_CURRENT_SOURCE_DIR}/include/models/*.hpp
+  ${CMAKE_CURRENT_SOURCE_DIR}/include/components/*.hpp
+  ${CMAKE_CURRENT_SOURCE_DIR}/qrc/*.qrc
 )
 
 # 构建可执行文件
