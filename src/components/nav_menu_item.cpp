@@ -22,7 +22,7 @@ NavMenuItem::NavMenuItem(const QString &icon_name, QString text, QWidget *parent
 
   auto *layout = new QHBoxLayout(this);
   icon_label->setPixmap(normal_icon);
-  layout->setContentsMargins(25, 12, 16, 12);
+  layout->setContentsMargins(20, 12, 16, 12);
   layout->setSpacing(12);
   layout->addWidget(icon_label);
   layout->addStretch();
@@ -68,7 +68,7 @@ void NavMenuItem::paintEvent(QPaintEvent *event) {
   painter.setRenderHint(QPainter::Antialiasing); // 抗锯齿
 
   const auto rect = this->rect();
-  const auto label_rect = this->rect().adjusted(10, 0, -40, 0);
+  const auto label_rect = this->rect().adjusted(65, 0, 0, 0);
 
   // 绘制圆角背景
   painter.setBrush(m_background);
@@ -78,7 +78,7 @@ void NavMenuItem::paintEvent(QPaintEvent *event) {
   // 绘制标签
   painter.setFont(font);
   painter.setPen(QPen(m_color));
-  painter.drawText(label_rect, Qt::AlignCenter, text);
+  painter.drawText(label_rect, Qt::AlignVCenter | Qt::AlignLeft, text);
 
   // 绘制提示条
   painter.setPen(Qt::NoPen);
@@ -108,8 +108,8 @@ void NavMenuItem::updateIndicator() {
   group->addAnimation(anim);
 
   anim = new QPropertyAnimation(this, indicator_heightProperty);
-  anim->setDuration(200);
-  anim->setEasingCurve(QEasingCurve::Linear);
+  anim->setDuration(400);
+  anim->setEasingCurve(QEasingCurve::OutCubic);
   anim->setStartValue(m_indicator_height);
   anim->setEndValue(hovered ? 35 : 0);
   group->addAnimation(anim);
