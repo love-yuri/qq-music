@@ -14,7 +14,8 @@ public:
   constexpr static auto active_background = QColor(0xFF, 0xD1, 0xDC, 255); // 活跃时背景色
   constexpr static auto normal_background = QColor(0xFF, 0xD1, 0xDC, 20);  // 默认背景色
   constexpr static auto active_text_color = QColor(238, 10, 36);           // 活跃时字体颜色
-  constexpr static auto normal_text_color = QColor(22, 55, 122);           // 默认字体颜色
+  constexpr static auto normal_text_color = QColor(114, 119, 131);         // 默认字体颜色
+
 private:
   bool hovered = false;                  // 是否hover
   bool active = false;                   // 是否active
