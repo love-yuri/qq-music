@@ -27,6 +27,7 @@ private:
 public:
   NavMenuItem(const QString &icon_name, QString text, QWidget *parent = nullptr);
   void set_active(bool) noexcept;
+  QString& get_text() noexcept { return text; }
 
 protected:
   void enterEvent(QEnterEvent *event) override;
