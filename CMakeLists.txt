@@ -36,24 +36,24 @@ file(GLOB IXX_MODULES
 )
 
 file(GLOB_RECURSE PROJECT_SOURCES
-  CONFIGURE_DEPENDS
-  main.cpp
-  ${IXX_MODULES}
-  ${CMAKE_CURRENT_SOURCE_DIR}/src/*.cpp
-  ${CMAKE_CURRENT_SOURCE_DIR}/src/components/*.hpp
-  ${CMAKE_CURRENT_SOURCE_DIR}/include/*.hpp
-  ${CMAKE_CURRENT_SOURCE_DIR}/include/models/*.hpp
-  ${CMAKE_CURRENT_SOURCE_DIR}/include/components/*.hpp
-  ${CMAKE_CURRENT_SOURCE_DIR}/qrc/*.qrc
+    CONFIGURE_DEPENDS
+    src/main.cpp
+    ${IXX_MODULES}
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/*.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/components/*.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/include/*.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/include/models/*.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/include/components/*.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/qrc/*.qrc
 )
 
 # 构建可执行文件
 qt_add_executable(${PROJECT_NAME} MANUAL_FINALIZATION ${PROJECT_SOURCES})
 
 target_sources(${PROJECT_NAME}
-  PRIVATE
-  FILE_SET cxx_modules TYPE CXX_MODULES FILES
-  ${IXX_MODULES}
+    PRIVATE
+    FILE_SET cxx_modules TYPE CXX_MODULES FILES
+    ${IXX_MODULES}
 )
 set_property(TARGET ${PROJECT_NAME} PROPERTY CXX_SCAN_FOR_MODULES ON)
 
@@ -62,10 +62,10 @@ target_include_directories(${PROJECT_NAME} PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/i
 
 # 链接文件
 target_link_libraries(
-  ${PROJECT_NAME} 
-  PRIVATE 
-  Qt6::Widgets
-  Qt6::Svg
+    ${PROJECT_NAME}
+    PRIVATE
+    Qt6::Widgets
+    Qt6::Svg
 )
 
 # 链接api库
@@ -73,9 +73,9 @@ target_link_libraries(${PROJECT_NAME} PRIVATE qq_music_api)
 
 qt_finalize_executable(${PROJECT_NAME})
 
-if(MSVC)
+if (MSVC)
   target_compile_options(${PROJECT_NAME} PUBLIC /Zc:preprocessor /utf-8)
-endif()
+endif ()
 
 # 拷贝js
 add_custom_command(

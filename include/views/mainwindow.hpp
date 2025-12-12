@@ -6,7 +6,6 @@
  */
 #pragma once
 
-#include <QHBoxLayout>
 #include <QMainWindow>
 #include <QMouseEvent>
 #include <QLabel>
