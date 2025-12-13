@@ -6,13 +6,9 @@
 #include "yuri_log.hpp"
 #include "components/nav_menu_item.hpp"
 #include <QTimer>
-#include <QGraphicsOpacityEffect>
 #include <QThread>
-#include <QParallelAnimationGroup>
-#include <QSequentialAnimationGroup>
 #include "models/nav_types.hpp"
-
-import global_navigation;
+#include "components/global_navigation.hpp"
 
 MainWindow::MainWindow(QMainWindow *parent) : QMainWindow(parent), ui(new Ui::MainWindow) {
   ui->setupUi(this);
@@ -28,7 +24,8 @@ MainWindow::~MainWindow() {
 void MainWindow::resizeEvent(QResizeEvent *event) {
   QMainWindow::resizeEvent(event);
   QTimer::singleShot(0, this, [this] {
-    navigation_manager->next(ui->right_content, new QPushButton("yuri", ui->right_content));
+    const auto current = navigation_manager->current_widget(ui->right_content);
+    current->setGeometry(ui->right_content->rect());
   });
 }
 
@@ -65,6 +62,8 @@ void MainWindow::initNavMenu() {
       }
     }, item);
   }
+
+  navigation_manager->init(ui->right_content, new QPushButton("yuri", ui->right_content));
 }
 
 void MainWindow::addSection(const NavSection type) const {
@@ -131,8 +130,8 @@ void MainWindow::addPage(NavEntry type) {
       active_menu_item->set_active(false);
     }
 
-    item->set_active(true);
     active_menu_item = item;
+    active_menu_item->set_active(true);
 
     navigation_manager->next(ui->right_content, new QPushButton(item->get_text(), ui->right_content));
   });

@@ -12,7 +12,6 @@
 #include <QParallelAnimationGroup>
 #include "yuri_log.hpp"
 #include "components/nav_menu_item.hpp"
-#include <QRandomGenerator>
 #include "models/nav_types.hpp"
 
 QT_BEGIN_NAMESPACE
