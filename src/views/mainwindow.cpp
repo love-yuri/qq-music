@@ -9,6 +9,7 @@
 #include <QThread>
 #include "models/nav_types.hpp"
 #include "components/global_navigation.hpp"
+#include "views/my_likes_page.hpp"
 
 MainWindow::MainWindow(QMainWindow *parent) : QMainWindow(parent), ui(new Ui::MainWindow) {
   ui->setupUi(this);
@@ -42,7 +43,8 @@ void MainWindow::initStyle() {
     ui->splitter->setSizes({300, ui->splitter->width() - 300});
   });
 
-  resize(700, 450);
+  constexpr auto radio = 1;
+  resize(1920 * radio, 1080 * radio);
 
   ui->verticalLayout_2->setAlignment(Qt::AlignTop);
 }
@@ -63,7 +65,7 @@ void MainWindow::initNavMenu() {
     }, item);
   }
 
-  navigation_manager->init(ui->right_content, new QPushButton("yuri", ui->right_content));
+  navigation_manager->init(ui->right_content, new MyLikesPage(ui->right_content));
 }
 
 void MainWindow::addSection(const NavSection type) const {
