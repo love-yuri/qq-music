@@ -1,6 +1,7 @@
 <RCC>
     <qresource prefix="/">
         <file>qss/main.qss</file>
+        <file>qss/my_likes_page.qss</file>
 
         <file>icons/normal/download-manager.svg</file>
         <file>icons/normal/fm.svg</file>
@@ -19,6 +20,11 @@
         <file>icons/active/podcast.svg</file>
         <file>icons/active/video.svg</file>
         <file>icons/music-163.svg</file>
+        <file>icons/play.svg</file>
+        <file>icons/collect.svg</file>
+        <file>icons/share.svg</file>
+        <file>icons/search.svg</file>
 
+        <file>images/test.jpg</file>
     </qresource>
 </RCC>
