@@ -64,6 +64,11 @@ public:
     }
   }
 
+  // 获取音乐数量
+  [[nodiscard]] long long size() const {
+    return music_list.size();
+  }
+
   // 获取音乐信息
   [[nodiscard]] MusicItem& at(const int row) {
     return music_list[row];
