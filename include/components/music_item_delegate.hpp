@@ -20,13 +20,4 @@ public:
 
   // 处理鼠标事件
   bool editorEvent(QEvent *event, QAbstractItemModel *model, const QStyleOptionViewItem &option, const QModelIndex &index) override;
-
-signals:
-
-
-private:
-  /**
-   * 绘制背景
-   */
-  static void drawBackground(QPainter *painter, const QStyleOptionViewItem &option) ;
 };
