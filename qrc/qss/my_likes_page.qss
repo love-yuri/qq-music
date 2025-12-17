@@ -114,54 +114,6 @@
   background: transparent;
 }
 
-#widget_2 {
-  min-height: 50;
-  background: rgba(223, 93, 115, 0.5);
-}
-
-#widget_2:hover {
-  background: rgba(120, 171, 184, 0.5);
-}
-
-#label_5 {
-  min-width: 40;
-  min-height: 40;
-  border-radius: 4;
-  margin-left: 10;
-  background: rgb(99, 145, 157);
-}
-
-#label_6 {
-  color: white;
-  font-weight: 500;
-  margin-left: 2;
-  padding: -2;
-}
-
-#label_7 {
-  padding: 0 1;
-  border-radius: 3px;
-  font-weight: 600;
-  max-height: 20;
-  background: rgba(255, 215, 0, 0.2);
-  color: #ffd700;
-  border: 1px solid rgba(255, 215, 0, 60);
-}
-
-#label_8 {
-  padding: -1 1;
-  padding-bottom: 1;
-  border-radius: 3px;
-  font-weight: 600;
-  max-height: 20;
-  background: qlineargradient(x1: 0, y1: 0,
-      x2: 1, y2: 1,
-      stop: 0 #f093fb,
-      stop: 1 #f5576c);
-  color: #ffffff;
-}
-
-
 QListView {
   padding: 6px;
 }
@@ -187,4 +139,18 @@ QScrollBar::handle:vertical:hover {
 QScrollBar::add-line:vertical,
 QScrollBar::sub-line:vertical {
   height: 0px;
+}
+
+#header_widget {
+  min-height: 40;
+  background: transparent;
+  border-bottom: 2 solid rgb(236, 178, 178);
+  margin-left: 12;
+  margin-right: 12;
+}
+
+
+#header_widget QLabel {
+  font-weight: 500;
+  color: rgb(44, 43, 43);
 }
