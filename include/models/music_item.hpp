@@ -5,7 +5,7 @@
 
 // 音乐项数据结构
 struct MusicItem {
-  QString id;              // 唯一标识
+  long id;                 // 唯一标识
   QString title;           // 标题/歌名
   QString artist;          // 艺术家/歌手
   QString album;           // 专辑名
