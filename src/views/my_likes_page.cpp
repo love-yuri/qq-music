@@ -67,6 +67,7 @@ void MyLikesPage::initStyle() {
   // 设置视图属性
   auto *listView = ui->music_list;
   listView->setModel(model);
+  listView->setMouseTracking(true);
   listView->setItemDelegate(new MusicItemDelegate(this));
   listView->setSelectionMode(QAbstractItemView::SingleSelection);
   listView->setVerticalScrollMode(QAbstractItemView::ScrollPerPixel);  // 平滑滚动
