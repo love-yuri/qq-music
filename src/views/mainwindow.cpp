@@ -69,16 +69,29 @@ void MainWindow::initNavMenu() {
 }
 
 void MainWindow::addSection(const NavSection type) const {
+  QLabel *label = nullptr;
   switch (type) {
     case NavSection::MyMusic: {
-      ui->verticalLayout_2->addWidget(new QLabel("我的音乐"));
+      label = new QLabel("我的音乐");
       break;
     }
     case NavSection::Online: {
-      ui->verticalLayout_2->addWidget(new QLabel("在线音乐"));
+      label =new QLabel("在线音乐");
       break;
     }
+    default: throw std::runtime_error("暂未支持的标签!");
   }
+
+  QFont font;
+  font.setPointSize(16);
+  label->setFont(font);
+  label->setStyleSheet(R"(
+    min-height: 40px;
+    color: rgba(108, 105, 105, 0.85);
+    font-weight: 600;
+    margin-bottom: -4;
+  )");
+  ui->verticalLayout_2->addWidget(label);
 }
 
 void MainWindow::addPage(NavEntry type) {

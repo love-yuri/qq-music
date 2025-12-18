@@ -11,4 +11,5 @@
 /* 左侧顶部logo */
 #main_logo {
     margin-top: 10;
+    color: #6d6b6b;
 }
