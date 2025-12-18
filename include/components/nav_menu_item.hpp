@@ -12,7 +12,7 @@ class NavMenuItem final : public QWidget {
 public:
   static constexpr auto widget_radius = 10;                                // 圆角大小
   constexpr static auto active_background = QColor(0xFF, 0xD1, 0xDC, 255); // 活跃时背景色
-  constexpr static auto normal_background = QColor(0xFF, 0xD1, 0xDC, 20);  // 默认背景色
+  constexpr static auto normal_background = QColor(0xFF, 0xD1, 0xDC, 0);  // 默认背景色
   constexpr static auto active_text_color = QColor(238, 10, 36);           // 活跃时字体颜色
   constexpr static auto normal_text_color = QColor(114, 119, 131);         // 默认字体颜色
 

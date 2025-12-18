@@ -18,7 +18,7 @@ NavMenuItem::NavMenuItem(const QString &icon_name, QString text, QWidget *parent
   font.setWeight(QFont::Medium);
   font.setFamily("Maple Mono NF CN Medium");
 
-  setMaximumHeight(63);
+  setMaximumHeight(59);
 
   auto *layout = new QHBoxLayout(this);
   icon_label->setPixmap(normal_icon);
