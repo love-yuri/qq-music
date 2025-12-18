@@ -60,7 +60,7 @@ void MyLikesPage::initStyle() {
 
   for (int i = 0; i < 1000; i++) {
     model->addMusic(MusicItem {
-      .title = "yuri is yes" + QString::number(i),
+      .title = "下雪的季节",
     });
   }
 
