@@ -9,6 +9,8 @@
 class MusicItemDelegate : public QStyledItemDelegate {
   Q_OBJECT
 
+  int playing_index = -1; // 正在播放的序号
+
 public:
   explicit MusicItemDelegate(QObject *parent = nullptr);
 

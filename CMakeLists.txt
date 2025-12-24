@@ -44,6 +44,7 @@ file(GLOB_RECURSE PROJECT_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/include/*.hpp
     ${CMAKE_CURRENT_SOURCE_DIR}/include/models/*.hpp
     ${CMAKE_CURRENT_SOURCE_DIR}/include/components/*.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/include/components/music_item/*.hpp
     ${CMAKE_CURRENT_SOURCE_DIR}/qrc/*.qrc
 )
 
