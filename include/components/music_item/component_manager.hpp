@@ -77,6 +77,9 @@ class ComponentManager: QObject {
   /* listView */
   QWidget* widget;
 
+  /* shared config */
+  int is_playing_index = -1;
+
 public:
   explicit ComponentManager(QListView *parent = nullptr);
 

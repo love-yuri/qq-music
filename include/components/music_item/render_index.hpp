@@ -30,9 +30,7 @@ struct RendererIndex {
       painter->setBrush(play_status_color);
       painter->setPen(Qt::NoPen);
       painter->drawEllipse(play_status_rect);
-
       painter->setBrush(QBrush(Qt::black));
-      painter->setPen(Qt::NoPen);
 
       const QPointF center = play_status_rect.center();
       constexpr qreal triangle_size = play_status_width * 0.4;
@@ -43,10 +41,10 @@ struct RendererIndex {
         constexpr qreal bar_height = triangle_size * 1.2;
         constexpr qreal spacing = triangle_size * 0.3;
 
-        const QRectF left_bar(center.x() - spacing / 2 - bar_width,
+        const QRectF left_bar(center.x() - spacing / 2 - bar_width + 2,
                         center.y() - bar_height / 2,
                         bar_width, bar_height);
-        const QRectF right_bar(center.x() + spacing / 2,
+        const QRectF right_bar(center.x() + spacing / 2 + 2,
                          center.y() - bar_height / 2,
                          bar_width, bar_height);
 
@@ -72,11 +70,7 @@ struct RendererIndex {
    * 处理鼠标悬浮
    */
   MusicItemMouseOverFunc {
-    if (const auto index_rect = indexRect(rect, index); index_rect.contains(event->pos())) {
-      manager->widget->setCursor(Qt::PointingHandCursor);
-    } else {
-      manager->widget->setCursor(Qt::ArrowCursor);
-    }
+
   }
 
   /**
@@ -85,6 +79,10 @@ struct RendererIndex {
   MusicItemMouseClickFunc {
     if (const auto index_rect = indexRect(rect, index); index_rect.contains(event->pos())) {
       item.is_playing = true;
+      if (const auto last_index = manager->is_playing_index; last_index != -1 && last_index != index) {
+        manager->model->at(last_index).is_playing = false;
+      }
+      manager->is_playing_index = index;
       manager->repaint();
     }
   }
