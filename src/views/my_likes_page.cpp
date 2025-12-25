@@ -1,5 +1,6 @@
 #include "views/my_likes_page.hpp"
 #include "components/music_item_delegate.hpp"
+#include "components/music_item/render_background.hpp"
 #include "models/music_item.hpp"
 #include "models/music_item_model.hpp"
 #include "ui/ui_my_likes_page.h"
@@ -56,19 +57,18 @@ void MyLikesPage::initStyle() {
   });
 
   // 创建模型和视图
-  auto *model = new MusicItemModel(this);
-
+  const auto *manager = new music_item_delegate::ComponentManager(ui->music_list);
   for (int i = 0; i < 1000; i++) {
-    model->addMusic(MusicItem {
+    manager->get_model()->addMusic(MusicItem {
       .title = "下雪的季节",
     });
   }
 
   // 设置视图属性
   auto *listView = ui->music_list;
-  listView->setModel(model);
+  listView->setModel(manager->get_model());
   listView->setMouseTracking(true);
-  listView->setItemDelegate(new MusicItemDelegate(this));
+  listView->setItemDelegate(manager->get_delegate());
   listView->setSelectionMode(QAbstractItemView::SingleSelection);
   listView->setVerticalScrollMode(QAbstractItemView::ScrollPerPixel);  // 平滑滚动
 }

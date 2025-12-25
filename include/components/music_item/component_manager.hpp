@@ -1,77 +1,120 @@
 #pragma once
 
 #include <QPainter>
+#include "shared_styles.hpp"
+#include "components/music_item_delegate.hpp"
 #include "models/music_item.hpp"
+#include "models/music_item_model.hpp"
+
+#include <QListView>
 #include <QRect>
 
 /* 渲染函数 */
-#define MusicItemPainterFunc static void painter(QPainter *painter, \
-const QRect &rect, \
-const MusicItem &item, \
-const int index, \
-bool is_hover, \
-bool is_playing \
+#define MusicItemPainterFunc static void painter( \
+  music_item_delegate::ComponentManager* manager, \
+  QPainter *painter, \
+  const QRect &rect, \
+  const MusicItem &item, \
+  const int index, \
+  bool is_hover \
 )
 
+/* 鼠标悬浮 */
+#define MusicItemMouseOverFunc static void mouse_over( \
+  music_item_delegate::ComponentManager* manager, \
+  const QRect &rect, \
+  MusicItem &item, \
+  const int index, \
+  const QMouseEvent* event \
+)
+
+template <typename T>
+concept HasMouseOver = requires(T t, music_item_delegate::ComponentManager* manager, const QRect &rect, MusicItem &music, int row, const QMouseEvent *event) {
+  { t.mouse_over(manager, rect, music, row, event) };
+};
+
+/* 鼠标点击 */
+#define MusicItemMouseClickFunc static void mouse_click( \
+  music_item_delegate::ComponentManager* manager, \
+  const QRect &rect, \
+  MusicItem &item, \
+  const int index, \
+  const QMouseEvent* event \
+)
+
+template <typename T>
+concept HasMouseClick = requires(T t, music_item_delegate::ComponentManager* manager, const QRect &rect, MusicItem &music, int row, const QMouseEvent *event) {
+  { t.mouse_click(manager, rect, music, row, event) };
+};
+
+namespace music_item_delegate {
+struct RendererBackground;
+
 /**
- * 共享样式
+ * 组件管理
  */
+class ComponentManager: QObject {
+  Q_OBJECT
 
-/* index序号样式 */
-constexpr auto index_2b_width = 40;                      // 2位index宽度
-constexpr auto index_3b_width = 60;                      // 3位index宽度
-constexpr auto index_left_padding = 20;                  // index左侧padding
+  MusicItemModel* model;
+  MusicItemDelegate* delegate;
 
-/* 标题样式 */
-constexpr auto title_text_color = QColor(114, 119, 131); // 标题字体
-constexpr auto title_left_padding = 20;                        // 标题左侧 padding
-
-/* 播放状态样式 */
-constexpr auto play_status_width = 36;                   // 播放状态宽度
-constexpr auto play_status_color = QColor(170,150,218); // 播放状态背景
-
-/* 通用样式 */
-constexpr auto default_left_padding = 20;                // 默认左侧padding
-constexpr auto default_header_left_padding = 60;         // header左侧padding
-constexpr auto default_header_tap_size = 3;               // header默认页数
-constexpr auto default_header_weight = 10.0 / default_header_tap_size;  // header默认分布
-
-/* 背景 */
-constexpr auto hover_bg_color = QColor(230, 230, 230); // hover时的背景
-constexpr auto hover_bg_radius = 8;                          // hover时的背景radius
-
-/* 品质样式 */
-constexpr auto quality_label_height = 20;                     // 品质标签高度
-constexpr auto quality_label_width = 36;                      // 品质标签宽度
-constexpr auto quality_label_radius = 4;                      // 品质标签圆角
-constexpr auto quality_label_font_size = 8;                   // 品质标签大小
-constexpr auto quality_hq_label_color = QColor(217, 119, 6);         // 深金色文字
-constexpr auto quality_hq_border_color = QColor(217, 119, 6, 100); // 深金色边框
-constexpr auto quality_hq_color = QColor(254, 243, 199);             // 浅金色背景
-constexpr auto quality_vip_label_color = QColor(255, 255, 255);      // vip标签颜色
-constexpr auto quality_vip_bg_color = QColor(238, 130, 238);         // vip标签背景色
-
-/* 专辑图片样式 */
-constexpr auto music_cover_radius = 8;                     // 音乐图片圆角大小
-constexpr auto music_cover_width = 36;                     // 音乐图片大小
-constexpr auto music_cover_left_padding = 10;              // 音乐图片距离index padding
-
-struct painter_value {
-  // index绘制字体
-  const QFont index_font = [] {
+  QFont index_font = [] {
     QFont font;
     font.setPixelSize(26);
     font.setWeight(QFont::Medium);
     return font;
   }();
+
+  /* friend render */
+  friend struct RendererBackground;
+  friend struct RendererAlbum;
+  friend struct RendererCover;
+  friend struct RendererTitle;
+  friend struct RendererSinger;
+  friend struct RendererIndex;
+
+  /* listView */
+  QWidget* widget;
+
+public:
+  explicit ComponentManager(QListView *parent = nullptr);
+
+  /**
+   * 获取model
+   * @return model
+   */
+  [[nodiscard]] MusicItemModel* get_model() const;
+
+  /**
+   * 获取代理
+   * @return 代理
+   */
+  [[nodiscard]] MusicItemDelegate* get_delegate() const;
+
+  /**
+   * 界面重绘
+   */
+  void repaint() const {
+    widget->repaint();
+  }
+
+  /**
+   * 绘制操作
+   */
+  void painter(QPainter *painter, const QStyleOptionViewItem &option, int row);
+
+  /**
+   * 鼠标over操作
+   */
+  void mouse_over(const QStyleOptionViewItem &option, const QMouseEvent *event, int row);
+
+  /**
+   * 点击事件
+   */
+  void mouser_click(const QStyleOptionViewItem &option, const QMouseEvent *event, int row);
 };
 
-/**
- * 获取绘制value
- */
-static painter_value& get_painter_value() {
-  static painter_value painter_value;
-  return painter_value;
 }
 
 // #pragma once

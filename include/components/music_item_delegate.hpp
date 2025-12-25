@@ -6,13 +6,19 @@
 #include <QModelIndex>
 #include <QMouseEvent>
 
+namespace music_item_delegate {
+class ComponentManager;
+}
+
 class MusicItemDelegate : public QStyledItemDelegate {
   Q_OBJECT
+
+  music_item_delegate::ComponentManager * manager;
 
   int playing_index = -1; // 正在播放的序号
 
 public:
-  explicit MusicItemDelegate(QObject *parent = nullptr);
+  explicit MusicItemDelegate(music_item_delegate::ComponentManager *manager, QObject *parent = nullptr);
 
   // 绘制
   void paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const override;

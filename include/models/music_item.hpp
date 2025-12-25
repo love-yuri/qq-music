@@ -15,4 +15,5 @@ struct MusicItem {
   QString durationText;    // 时长文本 "03:45"
   qint64 fileSize;         // 文件大小(字节)
   QString format;          // 格式 "mp3", "flac"
+  bool is_playing;         // 是否正在播放
 };
